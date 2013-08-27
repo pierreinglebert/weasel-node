@@ -1,0 +1,26 @@
+{
+  "author": "Pierre Inglebert",
+  "name": "weasel-node",
+  "description": "Error reporting client for Weasel",
+  "version": "0.1.0",
+  "homepage": "https://github.com/pierreinglebert/weasel-node",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pierreinglebert/weasel-node.git"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "async": "~0.2.9",
+    "request": "~2.27.0",
+    "chai": "~1.7.2",
+    "mocha": "~1.12.0"
+  },
+  "devDependencies": {
+    "mocha": "1.9.x"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script"
+  }
+}

@@ -1,40 +1,29 @@
 Require = require('covershot').require.bind(null, require)
 
+nock = require "nock"
 chai = require "chai"
 expect = chai.expect
 assert = chai.assert
 
-nock = require "nock"
-
-request = Require "request";
+client = Require "../lib/client"
 
 describe('parse Node error', () ->
-  it('should emit an error if id is not defined or wrong', (done) ->
-
-    stack = 
-      id: ''
-      apiKey: '5454d687687654654'
-
+  it('should emit an error if id or key is not defined or wrong', (done) ->
+    stack = {projectId: '', projectKey: '5454d687687654654'}
     scope = nock('http://www.weaseljs.com')
       .post('/log', stack)
-      .reply(409, "Erreur");
-      #.reply(200, function(uri, requestBody) {
-      #  return requestBody;
-      #});
-    
-    request
-      method: "POST"
-      uri: "http://www.weaseljs.com/log"
-      form: stack,
-      (error, response, body) ->
-        assert.equal response.statusCode, 409
-        done()
+      .reply(409, "Erreur")
+    client.send {}, stack, (err) ->
+      assert.isNotNull err
+      done()
   )
-  it('should emit an error if api key is not defined or wrong', (done) ->
+  
+  it('should not emit an error if response is correct', (done) ->
     scope = nock('http://www.weaseljs.com')
-      .get('/')
-      .reply(200, {username: 'pgte', email: 'pedro.teixeira@gmail.com', _id: "4324243fsd"})
-
-    done()
+      .post('/log')
+      .reply(200, {})
+    stack = {projectId: '', projectKey: '5454d687687654654'}
+    client.send {}, stack, (err) ->
+      done()
   )
 )

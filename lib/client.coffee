@@ -6,18 +6,24 @@ request = require "request"
 # WEASEL_PROJECT_ID
 # WEASEL_PROJECT_API_KEY
 
-send = (data, opts) ->
+module.exports.send = (data, opts, cb) ->
   options = {}
-  options.url = opts.url or WEASEL_URL or defaultOptions.url
+  options.url = opts.url or process.env.WEASEL_URL or "http://www.weaseljs.com"
   options.url += '/log'
-  options.proxy = opts.proxy or WEASEL_HTTP_PROXY
+  options.proxy = opts.proxy or process.env.WEASEL_HTTP_PROXY
   options.json = true
-  options.body =
-    id: opts.projectId or WEASEL_PROJECT_ID
-    key: opts.projectKey or WEASEL_PROJECT_API_KEY
+  options.form =
+    projectId: opts.projectId or process.env.WEASEL_PROJECT_ID
+    projectKey: opts.projectKey or process.env.WEASEL_PROJECT_API_KEY
   
   request.post(
     options,
     (error, response, body) ->
-      console.log error
+      #console.log error
+      if error
+        cb(error, "HTTP error")
+      if response.statusCode is 200
+        cb(null, body)
+      else
+        cb(new Error("Error"), body)
   )

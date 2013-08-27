@@ -14,13 +14,28 @@
   "dependencies": {
     "async": "~0.2.9",
     "request": "~2.27.0",
-    "chai": "~1.7.2",
-    "mocha": "~1.12.0"
+    "coffee-script": "~1.6.3"
+    
   },
   "devDependencies": {
-    "mocha": "1.9.x"
+    "chai": "~1.7.0",
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.8",
+    "grunt-env": "~0.4.0",
+    "grunt-exec": "~0.4.0",
+    "grunt-mocha-cli": "~1.0.5",
+    "nock": "~0.22",
+    "covershot": "~0.2.0",
+    "grunt-coffee-coverage": "~0.1.1",
+    "coveralls": "~2.1",
+    "grunt-release": "~0.5",
+    "grunt-coffeelint": "~0.0.7",
+    "grunt-contrib-clean": "~0.5",
+    "matchdep": "~0.1.2",
+    "schmock": "0.0.5"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script"
+    "test": "make test",
+    "coverage": "./node_modules/.bin/grunt coverage:travis"
   }
 }

@@ -1,22 +1,7 @@
-require "request"
 
-# Either NODE ENV or constructor options
-# WEASEL_HTTP_PROXY
-# WEASEL_URL
-# WEASEL_PROJECT_ID
-# WEASEL_PROJECT_API_KEY
 
-request.post(
-  url: 'http://www.weaseljs.com/log'
-  json: true
-  proxy: ''
-  body:
-    id: 'rte'
-    key:'value'
-  , 
-  (error, response, body) ->
-    console.log error
-)
+###
+
 
 log = (type, error) ->
   if not error? and typeof type == "object"
@@ -36,3 +21,16 @@ module.exports.registerGlobalHandler = (cb) ->
 
     client.captureError err, (result) ->
       node_util.log "uncaughtException: " + client.getIdent(result)
+###
+
+patchStackTrace = ->
+  previous = Error.prepareStackTrace
+  Error.prepareStackTrace = (error, structuredStackTrace) ->
+    error.structuredStackTrace = structuredStackTrace
+    if previous?
+      previous.call this, arguments
+    else
+      #v8 parse
+      require("./lib/formatStackTrace")(error, structuredStackTrace)
+
+patchStackTrace()

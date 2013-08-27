@@ -7,7 +7,7 @@ assert = chai.assert
 
 client = Require "../lib/client"
 
-describe('parse Node error', () ->
+describe('client send', () ->
   it('should emit an error if id or key is not defined or wrong', (done) ->
     stack = {projectId: '', projectKey: '5454d687687654654'}
     scope = nock('http://www.weaseljs.com')

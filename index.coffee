@@ -9,19 +9,13 @@ log = (type, error) ->
     type = "error"
 
   client.send
+###
 
 module.exports.registerGlobalHandler = (cb) ->
   process.on "uncaughtException", (err) ->
-    if cb
-      client.once "success", ->
-        cb null, err
-
-      client.once "error", (reqErr) ->
-        cb reqErr, err
-
-    client.captureError err, (result) ->
-      node_util.log "uncaughtException: " + client.getIdent(result)
-###
+    client.send err, (error, result) ->
+      if cb?
+        cb(error, result)
 
 patchStackTrace = ->
   previous = Error.prepareStackTrace

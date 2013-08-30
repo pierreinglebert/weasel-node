@@ -1,21 +1,13 @@
-
-
-###
-
-
-log = (type, error) ->
-  if not error? and typeof type == "object"
-    error = type
-    type = "error"
-
-  client.send
-###
+util = require "util"
+parser = require "./lib/parser"
 
 module.exports.registerGlobalHandler = (cb) ->
-  process.on "uncaughtException", (err) ->
-    client.send err, (error, result) ->
-      if cb?
-        cb(error, result)
+  process.on "uncaughtException", (error) ->
+    parser.parseError error, (err, parsedError) ->
+      unless err?
+        client.send parsedError, (error, result) ->
+          if cb?
+            cb(error, result)
 
 patchStackTrace = ->
   previous = Error.prepareStackTrace

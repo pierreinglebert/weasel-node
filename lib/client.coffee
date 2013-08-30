@@ -12,9 +12,9 @@ module.exports.send = (data, opts, cb) ->
   options.url += '/log'
   options.proxy = opts.proxy or process.env.WEASEL_HTTP_PROXY
   options.json = true
-  options.form =
-    projectId: opts.projectId or process.env.WEASEL_PROJECT_ID
-    projectKey: opts.projectKey or process.env.WEASEL_PROJECT_API_KEY
+  options.body = data
+  options.body.projectId = opts.projectId or process.env.WEASEL_PROJECT_ID
+  options.body.projectKey = opts.projectKey or process.env.WEASEL_PROJECT_API_KEY
   
   request.post(
     options,

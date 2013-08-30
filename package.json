@@ -15,7 +15,6 @@
     "async": "~0.2.9",
     "request": "~2.27.0",
     "coffee-script": "~1.6.3"
-    
   },
   "devDependencies": {
     "chai": "~1.7.0",
@@ -35,7 +34,7 @@
     "schmock": "0.0.5"
   },
   "scripts": {
-    "test": "make test",
+    "test": "./node_modules/.bin/grunt test",
     "coverage": "./node_modules/.bin/grunt coverage:travis"
   }
 }

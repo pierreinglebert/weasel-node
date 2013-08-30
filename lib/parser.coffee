@@ -1,3 +1,5 @@
+util = require "util"
+
 parseStack = (frames, cb) ->
   parsedStack = []
   for frame in frames
@@ -45,5 +47,8 @@ module.exports.parseError = (error, cb) ->
 
   parseStack(error.structuredStackTrace, (err, stack) ->
     parsedError.stack = stack
+
+    err = JSON.parse util.inspect(err)
+    
     cb(err, parsedError)
   )

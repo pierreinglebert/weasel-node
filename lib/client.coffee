@@ -7,6 +7,13 @@ request = require "request"
 # WEASEL_PROJECT_API_KEY
 
 module.exports.send = (data, opts, cb) ->
+
+  unless cb? 
+    if typeof opts is "function"
+      cb = opts
+    else
+      cb = ->
+
   options = {}
   options.url = opts.url or process.env.WEASEL_URL or "http://www.weaseljs.com"
   options.url += '/log'
@@ -19,7 +26,6 @@ module.exports.send = (data, opts, cb) ->
   request.post(
     options,
     (error, response, body) ->
-      #console.log error
       if error
         cb(error, "HTTP error")
       if response.statusCode is 200

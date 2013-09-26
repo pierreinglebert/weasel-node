@@ -4,10 +4,10 @@ client = require "./lib/client"
 
 module.exports.sendError = (error, cb) ->
   parser.parseError error, (err, parsedError) ->
-      unless err?
-        client.send parsedError, (error, result) ->
-          if cb?
-            cb(error, result)
+    unless err?
+      client.send parsedError, (error, result) ->
+        if cb?
+          cb(error, result)
 
 module.exports.registerGlobalHandler = (cb) ->
   process.on "uncaughtException", (error) ->

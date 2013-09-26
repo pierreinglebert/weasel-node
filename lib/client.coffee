@@ -8,7 +8,7 @@ request = require "request"
 
 module.exports.send = (data, opts, cb) ->
 
-  unless cb? 
+  unless cb?
     if typeof opts is "function"
       cb = opts
     else
